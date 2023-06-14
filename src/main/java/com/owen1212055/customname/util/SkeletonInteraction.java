@@ -36,10 +36,10 @@ public class SkeletonInteraction {
 
     public Packet<ClientGamePacketListener> syncDataPacket() {
         List<SynchedEntityData.DataValue<?>> data = new ArrayList<>();
-        data.add(ofData(Reflection.DATA_CUSTOM_NAME, Optional.ofNullable(PaperAdventure.asVanilla(this.customName.getName()))));
+        data.add(ofData(DataAccessors.DATA_CUSTOM_NAME, Optional.ofNullable(PaperAdventure.asVanilla(this.customName.getName()))));
 
         byte value = (byte) (this.customName.isTargetEntitySneaking() ? 1 << 1 : 0);
-        data.add(ofData(Reflection.DATA_SHARED_FLAGS_ID, value));
+        data.add(ofData(DataAccessors.DATA_SHARED_FLAGS_ID, value));
 
         return new ClientboundSetEntityDataPacket(this.customName.getNametagId(), data);
     }
@@ -50,14 +50,14 @@ public class SkeletonInteraction {
         buf.writeVarIntArray(new int[]{this.customName.getNametagId()});
 
         ClientboundSetEntityDataPacket initialCreatePacket = new ClientboundSetEntityDataPacket(this.customName.getNametagId(), List.of(
-                ofData(Reflection.DATA_WIDTH_ID, 0f),
-                ofData(Reflection.DATA_HEIGHT_ID, (float) this.customName.getEffectiveHeight()),
-                ofData(Reflection.DATA_POSE, Pose.CROAKING),
-                ofData(Reflection.DATA_CUSTOM_NAME_VISIBLE, true)
+                ofData(DataAccessors.DATA_WIDTH_ID, 0f),
+                ofData(DataAccessors.DATA_HEIGHT_ID, (float) this.customName.getEffectiveHeight()),
+                ofData(DataAccessors.DATA_POSE, Pose.CROAKING),
+                ofData(DataAccessors.DATA_CUSTOM_NAME_VISIBLE, true)
         ));
         Packet<ClientGamePacketListener> syncData = syncDataPacket();
         ClientboundSetEntityDataPacket afterCreateData = new ClientboundSetEntityDataPacket(this.customName.getNametagId(), List.of(
-                ofData(Reflection.DATA_HEIGHT_ID, 99999999f)
+                ofData(DataAccessors.DATA_HEIGHT_ID, 99999999f)
         ));
 
         return new ClientboundBundlePacket(List.of(

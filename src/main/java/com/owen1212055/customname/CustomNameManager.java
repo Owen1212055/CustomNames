@@ -25,9 +25,7 @@ public class CustomNameManager {
             this.storage.registerNew(entity.getUniqueId(), customName);
 
             // Send to trackers
-            for (Player player : entity.getTrackedPlayers()) {
-                customName.sendToClient(player);
-            }
+            customName.setHidden(false);
         }
 
         return customName;

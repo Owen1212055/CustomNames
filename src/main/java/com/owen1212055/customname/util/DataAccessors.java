@@ -4,16 +4,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Interaction;
+import net.minecraft.world.entity.Pose;
 import xyz.jpenilla.reflectionremapper.ReflectionRemapper;
 
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Optional;
 
-class Reflection {
+class DataAccessors {
 
     public static EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
-    public static EntityDataAccessor<net.minecraft.world.entity.Pose> DATA_POSE;
+    public static EntityDataAccessor<Pose> DATA_POSE;
     public static EntityDataAccessor<Optional<Component>> DATA_CUSTOM_NAME;
     public static EntityDataAccessor<Boolean> DATA_CUSTOM_NAME_VISIBLE;
 
