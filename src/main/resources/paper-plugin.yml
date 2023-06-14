@@ -1,0 +1,4 @@
+name: 'CustomNames'
+version: '1.0'
+main: com.owen1212055.customname.CustomNamePlugin
+api-version: '1.20'
