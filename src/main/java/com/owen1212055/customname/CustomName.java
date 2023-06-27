@@ -9,6 +9,8 @@ import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +34,8 @@ public class CustomName {
     private Component name;
     private boolean hidden;
 
+    private final BukkitTask task;
+
     CustomName(Entity entity) {
         this.nametagEntityId = Bukkit.getUnsafe().nextEntityId();
         this.targetEntity = entity;
@@ -45,6 +49,18 @@ public class CustomName {
         // Add the actual offset of the nametag
         this.effectiveHeight = -ridingOffset - 0.5 + nametagOffset;
         this.passengerOffset = ridingOffset;
+
+        this.task = new BukkitRunnable() {
+
+            private final Packet<ClientGamePacketListener> packet = interaction.getRiderPacket();
+
+            @Override
+            public void run() {
+                for (Player player : entity.getTrackedPlayers()) {
+                    ((CraftPlayer) player).getHandle().connection.send(packet);
+                }
+            }
+        }.runTaskTimer(CustomNamePlugin.getProvidingPlugin(CustomNamePlugin.class), 20, 20);
     }
 
     public void setName(Component name) {
@@ -123,4 +139,7 @@ public class CustomName {
         }
     }
 
+    public void close() {
+        this.task.cancel();
+    }
 }

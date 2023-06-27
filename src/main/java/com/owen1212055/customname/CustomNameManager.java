@@ -1,6 +1,7 @@
 package com.owen1212055.customname;
 
 import com.owen1212055.customname.listener.EntityPassengerListener;
+import com.owen1212055.customname.listener.PlayerQuitListener;
 import com.owen1212055.customname.listener.PlayerSneakListener;
 import com.owen1212055.customname.listener.PlayerTrackerListener;
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ public class CustomNameManager {
         Bukkit.getPluginManager().registerEvents(new PlayerTrackerListener(this.storage), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerSneakListener(this.storage), plugin);
         Bukkit.getPluginManager().registerEvents(new EntityPassengerListener(this.storage, plugin), plugin);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(plugin, this.storage), plugin);
     }
 
     public CustomName forEntity(Entity entity) {

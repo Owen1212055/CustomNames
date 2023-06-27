@@ -18,4 +18,11 @@ public class CustomNameStorage {
     public void registerNew(UUID entityId, CustomName name) {
         this.customPlayerNameMap.put(entityId, name);
     }
+
+    public void remove(UUID uuid) {
+        CustomName name = this.customPlayerNameMap.remove(uuid);
+        if (name != null) {
+            name.close();
+        }
+    }
 }

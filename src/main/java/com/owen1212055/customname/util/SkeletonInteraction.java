@@ -44,10 +44,16 @@ public class SkeletonInteraction {
         return new ClientboundSetEntityDataPacket(this.customName.getNametagId(), data);
     }
 
-    public Packet<?> initialSpawnPacket() {
+    public Packet<ClientGamePacketListener> getRiderPacket() {
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         buf.writeVarInt(this.customName.getTargetEntity().getEntityId());
         buf.writeVarIntArray(new int[]{this.customName.getNametagId()});
+
+        return new ClientboundSetPassengersPacket(buf);
+    }
+
+    public Packet<?> initialSpawnPacket() {
+
 
         ClientboundSetEntityDataPacket initialCreatePacket = new ClientboundSetEntityDataPacket(this.customName.getNametagId(), List.of(
                 ofData(DataAccessors.DATA_WIDTH_ID, 0f),
@@ -64,7 +70,7 @@ public class SkeletonInteraction {
                 createPacket(), // Create entity
                 initialCreatePacket,
                 syncData,
-                new ClientboundSetPassengersPacket(buf),
+                this.getRiderPacket(),
                 afterCreateData
         ));
     }
