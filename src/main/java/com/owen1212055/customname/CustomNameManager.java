@@ -32,4 +32,12 @@ public class CustomNameManager {
 
         return customName;
     }
+
+    public void unregister(Entity entity) {
+        CustomName customName = this.storage.remove(entity.getUniqueId());
+        if (customName != null) {
+            // Remove from trackers
+            customName.setHidden(true);
+        }
+    }
 }

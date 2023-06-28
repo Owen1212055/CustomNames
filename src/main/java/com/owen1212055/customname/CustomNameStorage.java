@@ -19,10 +19,13 @@ public class CustomNameStorage {
         this.customPlayerNameMap.put(entityId, name);
     }
 
-    public void remove(UUID uuid) {
+    @Nullable
+    public CustomName remove(UUID uuid) {
         CustomName name = this.customPlayerNameMap.remove(uuid);
         if (name != null) {
             name.close();
         }
+
+        return name;
     }
 }
