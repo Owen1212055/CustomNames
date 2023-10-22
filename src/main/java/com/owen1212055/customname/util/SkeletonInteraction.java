@@ -39,6 +39,7 @@ public class SkeletonInteraction {
         data.add(ofData(DataAccessors.DATA_CUSTOM_NAME, Optional.ofNullable(PaperAdventure.asVanilla(this.customName.getName()))));
 
         byte value = (byte) (this.customName.isTargetEntitySneaking() ? 1 << 1 : 0);
+        value |= 0x20;
         data.add(ofData(DataAccessors.DATA_SHARED_FLAGS_ID, value));
 
         return new ClientboundSetEntityDataPacket(this.customName.getNametagId(), data);
