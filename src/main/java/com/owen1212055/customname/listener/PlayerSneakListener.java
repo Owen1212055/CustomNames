@@ -25,7 +25,7 @@ public class PlayerSneakListener implements Listener {
     public void toggleSneak(PlayerToggleSneakEvent event) {
         CustomName playerName = this.nameStorage.getCustomPlayerName(event.getPlayer().getUniqueId());
         // Does the entity have a custom name?
-        if (playerName != null) {
+        if (playerName != null && !event.getPlayer().isInsideVehicle()) {
             playerName.setTargetEntitySneaking(event.isSneaking());
         }
     }
