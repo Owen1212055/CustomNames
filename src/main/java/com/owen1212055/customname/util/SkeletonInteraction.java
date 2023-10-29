@@ -64,7 +64,7 @@ public class SkeletonInteraction {
         ));
         Packet<ClientGamePacketListener> syncData = syncDataPacket();
         ClientboundSetEntityDataPacket afterCreateData = new ClientboundSetEntityDataPacket(this.customName.getNametagId(), List.of(
-                ofData(DataAccessors.DATA_HEIGHT_ID, 99999999f)
+                ofData(DataAccessors.DATA_HEIGHT_ID, 511f)
         ));
 
         return new ClientboundBundlePacket(List.of(
