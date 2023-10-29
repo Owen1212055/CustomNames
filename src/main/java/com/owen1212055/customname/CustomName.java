@@ -51,13 +51,11 @@ public class CustomName {
         this.passengerOffset = ridingOffset;
 
         this.task = new BukkitRunnable() {
-
-            private final Packet<ClientGamePacketListener> packet = interaction.getRiderPacket();
-
             @Override
             public void run() {
+                Packet<ClientGamePacketListener> riderPacket = CustomName.this.interaction.getRiderPacket();
                 for (Player player : entity.getTrackedPlayers()) {
-                    ((CraftPlayer) player).getHandle().connection.send(packet);
+                    ((CraftPlayer) player).getHandle().connection.send(riderPacket);
                 }
             }
         }.runTaskTimer(CustomNamePlugin.getProvidingPlugin(CustomNamePlugin.class), 20, 20);
@@ -141,5 +139,9 @@ public class CustomName {
 
     public void close() {
         this.task.cancel();
+    }
+
+    public boolean isHidden() {
+        return this.hidden;
     }
 }
