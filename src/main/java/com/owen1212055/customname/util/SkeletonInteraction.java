@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +49,25 @@ public class SkeletonInteraction {
     public Packet<ClientGamePacketListener> getRiderPacket() {
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         buf.writeVarInt(this.customName.getTargetEntity().getEntityId());
-        buf.writeVarIntArray(new int[]{this.customName.getNametagId()});
+
+        int[] passengerIds = this.passengerIds();
+        buf.writeVarIntArray(passengerIds);
 
         return new ClientboundSetPassengersPacket(buf);
+    }
+
+    private int[] passengerIds() {
+        List<Entity> passengers = this.customName.getTargetEntity().getPassengers(); //respect passengers
+        int[] passengerIds = new int[passengers.size()];
+        if (!this.customName.isHidden()) {
+            int length = passengerIds.length;
+            passengerIds = new int[length + 1];
+            passengerIds[length] = this.customName.getNametagId(); //always add the entity if it is visible
+        }
+        for (int i = 0; i < passengers.size(); i++) {
+            passengerIds[i] = passengers.get(i).getEntityId();
+        }
+        return passengerIds;
     }
 
     public Packet<?> initialSpawnPacket() {
