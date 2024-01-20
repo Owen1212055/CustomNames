@@ -14,7 +14,7 @@ public class CustomNameManager {
     private final CustomNameStorage storage = new CustomNameStorage();
 
     public void registerListeners(JavaPlugin plugin) {
-        Bukkit.getPluginManager().registerEvents(new PlayerTrackerListener(this.storage), plugin);
+        Bukkit.getPluginManager().registerEvents(new PlayerTrackerListener(plugin, this.storage), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerSneakListener(this.storage), plugin);
         Bukkit.getPluginManager().registerEvents(new EntityPassengerListener(this.storage, plugin), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(plugin, this.storage), plugin);
