@@ -5,8 +5,8 @@ import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,7 +41,7 @@ public class CustomName {
         this.targetEntity = entity;
 
         net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) entity).getHandle();
-        double ridingOffset = nmsEntity.getPassengersRidingOffset();
+        double ridingOffset = nmsEntity.getPassengerRidingPosition(null).subtract(nmsEntity.position()).y;
         double nametagOffset = nmsEntity.getNameTagOffsetY();
 
         // First, negate the riding offset to get to the bounding of the entity's bounding box
